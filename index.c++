@@ -1,4 +1,7 @@
 #include<bits/stdc++.h>
+#include<windows.h>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 // Define class
@@ -37,7 +40,60 @@ int getquantity(){
 };
 // Define adding function 
 void addItem(Bill b){
-    
+    bool close = false;
+    while(!close){
+        int ch; //ch for choice
+        cout<<"\t1.Add."<<endl;
+        cout<<"\t2.close."<<endl;
+        cout<<"\tEnter Choice: ";
+        cin>>ch;
+
+        // 
+        if(ch == 1){
+            system("cls");
+            string item;
+            int rate , quant;
+
+            // For item
+            cout << "\tEnter Item Name :";
+            cin >> item;
+            b.setItem(item); 
+
+            // For rate
+            cout<<"\tEnter rate of item :";
+            cin >> rate;
+            b.setRate(rate);
+
+            // For Quantity
+            cout <<"\tEnter Quantity of Item : ";
+            cin >> quant;
+            b.setquantity(quant);
+            
+            //Store the data in text file , ios :: app //(append)
+            ofstream out("Desktop\GIT PUSH\Super-Market-Billing-System\Bill.txt", ios::app);
+
+            if((!out)){
+                cout<<"\tError 404";
+            }
+            else{
+                out<<"\t"<<b.getItem()<<" : "<<b.getRate()<<" : "<<b.getquantity()<<endl <<endl;
+
+            }
+            out.close();
+            cout<<"\t!!Items added successfully!!"<<endl;;
+            // Display for some time
+            Sleep(3000); //3000ms
+
+        }
+
+        // Second Condition
+        else if(ch == 2){
+            system("cls");
+            close = true;
+            cout<<"\tBack to main menu"<<endl;
+            Sleep(3000);
+        }
+    }
 }
 
 int main(){
@@ -54,7 +110,10 @@ while(true){
     cin>>val;
     
     if(val == 1){
-
+        system("cls");
+        Sleep(3000);
+        addItem(b);
     }
+    
 }
 }
