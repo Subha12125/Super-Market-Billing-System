@@ -96,9 +96,93 @@ void addItem(Bill b){
     }
 }
 
+// For print Bill
+void printBill(){
+    system("cls");
+    int count = 0;
+    bool close = false;
+    while(!close){
+        system("cls");
+        int choice;
+        cout<<"\t1.Add Bill."<<endl;
+        cout<<"\t2.Close Session."<<endl;
+        cout<<"\tEnter Choice: ";
+        cin>>choice;
+        if(choice == 1){
+            string item;
+            int quant;
+            cout << "\tEnter Item :";
+            cin >> item;
+            cout << "\tEnter Quantity :";
+            cin >> quant;
+
+
+            ifstream in ("Desktop\GIT PUSH\Super-Market-Billing-System\Bill.txt");
+            ofstream out("Desktop\GIT PUSH\Super-Market-Billing-System\Billtemp.txt"); 
+
+            string line;
+            bool found = false;
+            
+            //Read the file line by line
+            while(getline(in , line)){
+                // Extract word
+                stringstream ss;
+                ss << line;
+
+                string itemName;
+                int itemRate;
+                int itemQuant;
+                char delimiter; // for " : "
+
+                ss >> itemName >> delimiter >> itemRate >> delimiter >> itemQuant;
+
+                // Find Item
+                if(item == itemName){
+                    found = true;
+                    if(quant == itemQuant){
+                        int ammount = itemRate*quant;
+                        cout << "\t Item | Rate | Quantity | Ammount"<<endl;
+                        cout <<"\t" << itemName << "\t" << itemRate << "\t" << quant <<"\t" << ammount<<endl;
+                        int newQuant = itemQuant - quant;
+                        itemQuant = newQuant;
+                        count += ammount;
+                        out <<"\t" <<itemName << " : " <<itemRate << " : " <<itemQuant<<endl<<endl;
+
+                    }
+                    else{
+                        // Not quantity
+                        cout << "\tSorry,"<<item <<"Ended !!" <<endl;
+                    }
+                }
+                else{
+                    out<<line;
+                }
+            }
+            if(!found){
+                cout <<"\t Item is not found!!"<<endl;
+            }
+            out.close();
+            in.close();
+            remove("Desktop\GIT PUSH\Super-Market-Billing-System\Bill.txt");
+            rename("Desktop\GIT PUSH\Super-Market-Billing-System\Billtemp.txt","Desktop\GIT PUSH\Super-Market-Billing-System\Bill.txt");
+        }
+        else if(choice==2){
+            close = true;
+            cout <<"\tCounting Total Bill"<<endl;
+        }
+        Sleep(3000);
+    }
+    system("cls");
+    cout<<"\tTotal Bill ---------------------------- : Rs" <<count <<endl <<endl;
+    cout <<"\tThanks For Shopping";
+    Sleep(5000);
+
+}
+
 int main(){
 Bill b;
-while(true){
+bool exit = false;
+while(!exit){
     system("cls"); //The command "cls" stands for "clear screen" and is used in Windows Command Prompt
     int val;
     cout<<"\tWelcome To GIT Super Market Billing System"<<endl;
@@ -114,6 +198,14 @@ while(true){
         Sleep(3000);
         addItem(b);
     }
-    
+    else if(val == 2){
+        printBill();
+    }
+    else if(val==3){
+        system("cls");
+        exit = true;
+        cout<<"\tGood Luck!"<<endl;
+        Sleep(3000);
+    }
 }
 }
