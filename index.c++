@@ -70,7 +70,7 @@ void addItem(Bill b){
             b.setquantity(quant);
             
             //Store the data in text file , ios :: app //(append)
-            ofstream out("Desktop\GIT PUSH\Super-Market-Billing-System\Bill.txt", ios::app);
+            ofstream out("Super-Market-Billing-System\Bill.txt", ios::app);
 
             if((!out)){
                 cout<<"\tError 404";
@@ -163,8 +163,8 @@ void printBill(){
             }
             out.close();
             in.close();
-            remove("Desktop\GIT PUSH\Super-Market-Billing-System\Bill.txt");
-            rename("Desktop\GIT PUSH\Super-Market-Billing-System\Billtemp.txt","Desktop\GIT PUSH\Super-Market-Billing-System\Bill.txt");
+            remove("Super-Market-Billing-System\Bill.txt");
+            rename("Super-Market-Billing-System\Billtemp.txt","Super-Market-Billing-System\Bill.txt");
         }
         else if(choice==2){
             close = true;
